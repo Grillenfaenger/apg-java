@@ -22,7 +22,7 @@ import apg.Utilities.*;
  * Defines the syntax call back functions for the SABNF grammar.
  * Defines subclasses used to build the opcodes
  */
-class GeneratorSyntax {
+public class GeneratorSyntax {
 	static Vector<String> errors;
 	static Vector<String> warnings;
 	static LineCatalog lineCatalog;
@@ -54,7 +54,7 @@ class GeneratorSyntax {
 //		GeneratorSyntax.parentStack = new Stack<SyntaxOpcode>();
 //		GeneratorSyntax.tbs = new Vector<Character>();
 //	}
-	static void initSyntax(Vector<String> errors, Vector<String> warnings,
+	public static void initSyntax(Vector<String> errors, Vector<String> warnings,
 			LineCatalog catalog){
 		GeneratorSyntax.errors = errors;
 		GeneratorSyntax.warnings = warnings;
@@ -384,8 +384,8 @@ class GeneratorSyntax {
 	}
 
 	// callback functions
-	static class GenFile extends RuleCallback {
-		GenFile(Parser parser){super(parser);}
+	public static class GenFile extends RuleCallback {
+		public GenFile(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			// set the correct rule id in all RNM opcodes
 			// RHA: previous code unnecessarily (?) relied on consecutive numbering
@@ -408,8 +408,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class GenRule extends RuleCallback {
-		GenRule(Parser parser){super(parser);}
+	public static class GenRule extends RuleCallback {
+		public GenRule(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			currentRule.clear();
 			currentRule.opcodeOffset = opcodes.size();
@@ -444,8 +444,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class NameDef extends RuleCallback {
-		NameDef(Parser parser){super(parser);}
+	public static class NameDef extends RuleCallback {
+		public NameDef(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				currentRule.name = new String(callbackData.inputString, offset, length);
@@ -456,8 +456,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class IncAlt extends RuleCallback {
-		IncAlt(Parser parser){super(parser);}
+	public static class IncAlt extends RuleCallback {
+		public IncAlt(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			// RHA: find rule to increment and prepare incrementing it
 			if(length >= 0){
@@ -478,8 +478,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Rnm extends RuleCallback {
-		Rnm(Parser parser){super(parser);}
+	public static class Rnm extends RuleCallback {
+		public Rnm(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				// create this opcode
@@ -503,8 +503,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Udt extends RuleCallback {
-		Udt(Parser parser){super(parser);}
+	public static class Udt extends RuleCallback {
+		public Udt(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				// create this opcode
@@ -544,8 +544,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Option extends RuleCallback {
-		Option(Parser parser){super(parser);}
+	public static class Option extends RuleCallback {
+		public Option(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			// create this opcode
 			SyntaxOpcode thisOpcode = new SyntaxOpcode();
@@ -574,8 +574,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Alternation extends RuleCallback {
-		Alternation(Parser parser){super(parser);}
+	public static class Alternation extends RuleCallback {
+		public Alternation(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			if(nextAlternativeIsIncremental){
 				nextAlternativeIsIncremental = false;
@@ -608,8 +608,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Concatenation extends RuleCallback {
-		Concatenation(Parser parser){super(parser);}
+	public static class Concatenation extends RuleCallback {
+		public Concatenation(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			// create this opcode
 			SyntaxOpcode thisOpcode = new SyntaxOpcode();
@@ -636,8 +636,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Repetition extends RuleCallback {
-		Repetition(Parser parser){super(parser);}
+	public static class Repetition extends RuleCallback {
+		public Repetition(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			// create this opcode
 			SyntaxOpcode thisOpcode = new SyntaxOpcode();
@@ -680,8 +680,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Rep extends RuleCallback {
-		Rep(Parser parser){super(parser);}
+	public static class Rep extends RuleCallback {
+		public Rep(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				// get the parent opcode
@@ -693,8 +693,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class RepMin extends RuleCallback {
-		RepMin(Parser parser){super(parser);}
+	public static class RepMin extends RuleCallback {
+		public RepMin(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length > 0){
 				// get the parent opcode
@@ -705,8 +705,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class RepMax extends RuleCallback {
-		RepMax(Parser parser){super(parser);}
+	public static class RepMax extends RuleCallback {
+		public RepMax(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length > 0){
 				// get the parent opcode
@@ -717,8 +717,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class RepMinMax extends RuleCallback {
-		RepMinMax(Parser parser){super(parser);}
+	public static class RepMinMax extends RuleCallback {
+		public RepMinMax(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length > 0){
 				// get the parent opcode
@@ -730,8 +730,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Predicate extends RuleCallback {
-		Predicate(Parser parser){super(parser);}
+	public static class Predicate extends RuleCallback {
+		public Predicate(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			// create this opcode
 			SyntaxOpcode thisOpcode = new SyntaxOpcode();
@@ -758,8 +758,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class And extends RuleCallback {
-		And(Parser parser){super(parser);}
+	public static class And extends RuleCallback {
+		public And(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length > 0){
 				// get the parent opcode
@@ -770,8 +770,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Not extends RuleCallback {
-		Not(Parser parser){super(parser);}
+	public static class Not extends RuleCallback {
+		public Not(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length > 0){
 				// get the parent opcode
@@ -782,8 +782,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class ProsVal extends RuleCallback {
-		ProsVal(Parser parser){super(parser);}
+	public static class ProsVal extends RuleCallback {
+		public ProsVal(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				String value = new String(callbackData.inputString, offset, length);
@@ -793,8 +793,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Tls extends RuleCallback {
-		Tls(Parser parser){super(parser);}
+	public static class Tls extends RuleCallback {
+		public Tls(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				// create this opcode
@@ -820,8 +820,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Tcs extends RuleCallback {
-		Tcs(Parser parser){super(parser);}
+	public static class Tcs extends RuleCallback {
+		public Tcs(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				// create this opcode
@@ -847,8 +847,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Tbs extends RuleCallback {
-		Tbs(Parser parser){super(parser);}
+	public static class Tbs extends RuleCallback {
+		public Tbs(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			tbs.clear();
 			return -1;
@@ -875,8 +875,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class DNum extends RuleCallback {
-		DNum(Parser parser){super(parser);}
+	public static class DNum extends RuleCallback {
+		public DNum(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				char digit = (char)decDigits(callbackData.inputString, offset, length);
@@ -889,8 +889,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class XNum extends RuleCallback {
-		XNum(Parser parser){super(parser);}
+	public static class XNum extends RuleCallback {
+		public XNum(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				char digit = (char)hexDigits(callbackData.inputString, offset, length);
@@ -903,8 +903,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class BNum extends RuleCallback {
-		BNum(Parser parser){super(parser);}
+	public static class BNum extends RuleCallback {
+		public BNum(Parser parser){super(parser);}
 		@Override public int postBranch(int offset, int length){
 			if(length >= 0){
 				char digit = (char)binaryDigits(callbackData.inputString, offset, length);
@@ -917,8 +917,8 @@ class GeneratorSyntax {
 		}
 	}
 
-	static class Trg extends RuleCallback {
-		Trg(Parser parser){super(parser);}
+	public static class Trg extends RuleCallback {
+		public Trg(Parser parser){super(parser);}
 		@Override public int preBranch(int offset){
 			tbs.clear();
 			return -1;
@@ -946,7 +946,7 @@ class GeneratorSyntax {
 	}
 
 	// prune the intermediate opcodes (remove redundant ALT(1), CAT(1) REP(1,1))
-	static boolean prune(){
+	public static boolean prune(){
 		boolean ret = false;
 		while (true){
 			if(rules.size() == 0){break;}
